@@ -1,3 +1,5 @@
+Aquí tienes el código completo y unificado de tu página web. He optimizado la función de JavaScript para que, al hacer clic en cualquier actuado o en la línea de tiempo, el documento PDF de GitHub se visualice directamente en el modal mediante un visor integrado (<iframe>) sin forzar descargas automáticas, manteniendo además un botón independiente por si el usuario desea descargarlo voluntariamente.
+Copia todo este código, reemplázalo por completo dentro de tu archivo index.html en tu repositorio de GitHub y guárdalo:
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1174,7 +1176,7 @@
     </div>
   </div>
 
-  <!-- MODAL: VISOR DE PDF (CON EL ENLACE DIRECTO DE GITHUB PARA LA DEMANDA) -->
+  <!-- MODAL: VISOR DE PDF -->
   <div id="modal-pdf-view" class="modal-overlay">
     <div class="modal-sheet" style="max-width: 780px; background: #e2e8f0;">
       <div class="pdf-bar">
@@ -1288,7 +1290,7 @@
       requestAnimationFrame(animateProgress);
     });
 
-    // BASE DE DATOS DE ACTUADOS (EL ACTUADO N° 1 CONTIENE TU ENLACE REAL DE GITHUB)
+    // BASE DE DATOS DE ACTUADOS CON TU ENLACE REAL DE GITHUB
     var ACTUADOS = [
       {
         n: 1, f: "Fjs. 1-26", d: "01/03/2023", t: "Demanda", des: "Demanda ordinaria laboral y anexos.",
@@ -1538,7 +1540,7 @@
       openModal('modal-generic-interop');
     }
 
-    // ABRIR EL VISOR PDF CON EL ENLACE DIRECTO DE GITHUB
+    // VISOR PDF: ABRE EL MODAL Y RENDERIZA EL PDF EN PANTALLA MEDIANTE IFRAME
     function openPdfDocument(num) {
       const act = ACTUADOS.find(a => a.n === num);
       if (!act) return;
@@ -1548,8 +1550,8 @@
       
       const container = document.getElementById('pdf-container-box');
       container.innerHTML = `
-        <iframe src="${act.pdfUrl}" width="100%" height="100%" style="border: none;">
-          <p>Tu navegador no soporta la visualización de PDFs. <a href="${act.pdfUrl}" target="_blank">Descargar PDF</a></p>
+        <iframe src="${act.pdfUrl}#view=FitH" width="100%" height="100%" style="border: none;">
+          <p>Tu navegador no soporta la visualización de PDFs. Puedes <a href="${act.pdfUrl}" target="_blank">descargar el archivo aquí</a>.</p>
         </iframe>
       `;
       openModal('modal-pdf-view');
@@ -1571,7 +1573,7 @@
                 <strong style="color:#750e2e;">${item.t}</strong>
                 <span style="color:#64748b; font-family:monospace;">${item.d}</span>
               </div>
-              <div style="font-size:11px; color:#334155;">${item.des} <br/><span style="color: #0284c7; font-size: 9px; margin-top: 4px; display: inline-block;">👁️ Clic para ver documento PDF en GitHub</span></div>
+              <div style="font-size:11px; color:#334155;">${item.des} <br/><span style="color: #0284c7; font-size: 9px; margin-top: 4px; display: inline-block;">👁️ Clic para ver documento PDF</span></div>
             </div>
           `;
           tBox.appendChild(div);
@@ -1594,7 +1596,7 @@
             <div style="font-size:11px; color:#64748b;">${a.des}</div>
           </td>
           <td style="padding:7px; text-align:center; font-size: 10px; color: #0284c7; font-weight: bold;">
-            👁️ Ver PDF GitHub
+            👁️ Ver Documento
           </td>
         `;
         tbody.appendChild(tr);
@@ -1631,7 +1633,7 @@
       setTimeout(() => {
         const bMsg = document.createElement('div');
         bMsg.style = "background:#ffffff; padding:10px 13px; border-radius:14px; border:1px solid var(--mag-border); max-width:88%; align-self:flex-start; font-size:12px; line-height:1.5;";
-        bMsg.innerHTML = "Como IURISNIANO, confirmo que el documento PDF de la demanda está correctamente vinculado desde GitHub y visible mediante el visor institucional.";
+        bMsg.innerHTML = "Como IURISNIANO, confirmo que el documento PDF de la demanda está correctamente vinculado desde GitHub y se renderiza directamente en el visor.";
         log.appendChild(bMsg);
         log.scrollTop = log.scrollHeight;
       }, 600);
